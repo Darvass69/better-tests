@@ -187,7 +187,7 @@ export function registerTestRunner(context: vscode.ExtensionContext) {
         .trim();
       const customScriptSetting = vscode.workspace
         .getConfiguration("better.test")
-        .get("customScript", "bun test")
+        .get("customScript", "deno test")
         .trim();
 
       const watchFlag =
@@ -241,9 +241,9 @@ export function registerTestRunner(context: vscode.ExtensionContext) {
       if (testName?.length) {
         if (customScriptSetting.length) {
           // escape the quotes in the test name
-          command += ` -t "${testName}"`;
+          command += ` --filter="${testName}"`;
         } else {
-          command += ` -t "${testName}"`;
+          command += ` --filter="${testName}"`;
         }
       }
       if (isWatchMode) {
