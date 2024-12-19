@@ -187,7 +187,7 @@ export function registerTestRunner(context: vscode.ExtensionContext) {
         .trim();
       const customScriptSetting = vscode.workspace
         .getConfiguration("better.test")
-        .get("customScript", "bun test")
+        .get("customScript", "deno test")
         .trim();
 
       const watchFlag =
@@ -198,7 +198,7 @@ export function registerTestRunner(context: vscode.ExtensionContext) {
 
       const customScript = customScriptSetting.length
         ? customScriptSetting
-        : "bun test";
+        : "deno test";
       // When this command is called from the command palette, the fileName and testName arguments are not passed (commands in package.json)
       // so then fileName is taken from the active text editor and it run for the whole file.
       if (!filePath) {
@@ -241,9 +241,9 @@ export function registerTestRunner(context: vscode.ExtensionContext) {
       if (testName?.length) {
         if (customScriptSetting.length) {
           // escape the quotes in the test name
-          command += ` -t "${testName}"`;
+          command += ` --filter="${testName}"`;
         } else {
-          command += ` -t "${testName}"`;
+          command += ` --filter="${testName}"`;
         }
       }
       if (isWatchMode) {
